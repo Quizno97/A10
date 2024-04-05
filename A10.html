@@ -1,0 +1,44 @@
+<script>
+    //Make sure to have opening and closing script tags for the js
+    //sets expiration date of cookie, the name and value of the cookie
+    function setCookie(cname,cvalue,exdays) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        let expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+//decodes the cookie into an array then loops through the array for the cookie
+    function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+//Below Checks if user has visited the site before in a popup
+    function checkCookie() {
+        let user = getCookie("username");
+        if (user != "") {
+            alert("Welcome again " + user);
+        } else {
+            user = prompt("Please enter your name:","");
+            if (user != "" && user != null) {
+                setCookie("username", user, 30);
+            }
+        }
+    }
+</script>
+</head>
+<style>body{background-color: darkgray; font-family: Arial;}</style>
+<body onload="checkCookie()"><h1>Welcome back to this basic website which is showing the basics of cookies!</h1></body>
+<footer>&copy;<strong>Richard Tyrrell 2024</strong></footer>
+</html>
